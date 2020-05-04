@@ -1,60 +1,8 @@
 import random
-from collections import defaultdict
-from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import List, Dict, Tuple, NewType, Optional
-
-
-@dataclass
-class Job:
-    metadata: dict
-
-    start: datetime = None
-    end: datetime = None
-
-
-class Machine:
-    pass
-
-
-class File:
-    pass
-
-
-@dataclass
-class Batch:
-    jobs: List[Job]
-    machine: Optional[Machine] = None
-
-
-@dataclass
-class Schedule:
-    batches: List[Batch]
-    metrics: Optional[Dict] = None
-
-
-@dataclass
-class OptimisationData:
-    jobs: List[Job]
-    machines: List[Machine]
-
-
-class CSVFileFTPClient:
-    def get_file_data(self, filename: str) -> List[Dict[str, str]]:
-        print(f'Getting data from {filename}')
-        return []
-
-
-class OptimisationDataGetter:
-    def get_data(self) -> OptimisationData:
-        file_client = CSVFileFTPClient() # !Hardcoded class. What would happen if we wanted different datasources?
-        jobs_data = file_client.get_file_data('jobs.csv')
-        jobs = [Job(metadata={}) for _ in jobs_data]
-
-        machines_data = file_client.get_file_data('machines.csv')
-        machines = [Machine() for _ in machines_data]
-
-        return OptimisationData(jobs=jobs, machines=machines)
+from platform.data_getter_exercise.data_getter import OptimisationDataGetter
+from platform.models import Job
 
 
 class JobPreprocessor:
@@ -131,10 +79,15 @@ class E2EScheduler:
         return schedule
 
 
-
 # Want to cover:
 
-# Law of Demeter
-# Dependency injection
-# Long dict coupling
-# Unnecessary inheritance
+# 45 min each? 30 min work + 15 in discussion
+
+# Law of Demeter (Metrics)
+# Dependency injection (data getter)
+# Long dict coupling (postprocessing?)
+# Unnecessary inheritance (opt model?) (use LSP here?)
+
+# Liskov Substitution principle?
+# Encapsulation?
+# Cohesion?
