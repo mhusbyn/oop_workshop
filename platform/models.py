@@ -6,21 +6,38 @@ from typing import List, Optional, Dict
 
 @dataclass
 class Job:
-    metadata: dict
+    metadata: Dict
     wafer_id: str
+
+    # start: Optional[datetime] = None
+    # end: Optional[datetime] = None
 
 
 class Machine:
-    def __init__(self):
-        self._processing_time = timedelta(hours=random.random())
+    def __init__(self, id_: str):
+        self._processing_time_modifier = random.random()
+        self._id = id_
 
     @property
-    def processing_time(self) -> timedelta:
-        return self._processing_time
+    def processing_time(self) -> float:
+        """Modifier that captures the 'efficiency' of a machine. Should be multiplied with any processing times
+        from batches"""
+        return self._processing_time_modifier
+
+    def get_duration_for_jobs_in_batch(self, jobs: List[Job]) -> timedelta:
+        return (FIXED_BATCH_TIME + len(jobs) * VARIABLE_BATCH_TIME) * self._processing_time_modifier
+
+    @property
+    def id(self):
+        return self._id
 
 
 class File:
     pass
+
+
+FIXED_BATCH_TIME = timedelta(minutes=10)
+VARIABLE_BATCH_TIME = timedelta(minutes=2)
 
 
 @dataclass

@@ -1,7 +1,7 @@
 import abc
 from typing import Iterable, Dict
 
-from platform.data_getter_exercise.data_getter_module.connections import IDataSource
+from platform.data_getter_exercise.data_getter_package.connections import IDataSource
 
 
 class IDataReader(abc.ABC):

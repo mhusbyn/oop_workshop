@@ -1,7 +1,7 @@
 import abc
 from typing import Iterable, Dict, Any
 
-from platform.data_getter_exercise.data_getter_module.readers import IDataReader
+from platform.data_getter_exercise.data_getter_package.readers import IDataReader
 from platform.models import OptimisationData, Machine, Job
 
 
@@ -50,7 +50,7 @@ class MachineParser:
     def parse_machine_dict(self, machine_dict: Dict[str, str]) -> Machine:
         # map values passed in the machine dict to values for params for the Machine constructor
         # Potentially cast/parse to the right type
-        return Machine()
+        return Machine(id_=machine_dict['id'])
 
 
 class JobParser:

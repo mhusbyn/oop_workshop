@@ -11,38 +11,8 @@ class JobPreprocessor:
             job.metadata['next_step_start'] = job.metadata['estimated_next_step_start'] + timedelta(minutes=10)
 
 
-FrobnicationValue = NewType('FrobnicationValue', float)
 
 
-class OptimisationRunner:
-    def run_optimisation(self, opt_data: OptimisationData) -> List[Tuple[Batch, FrobnicationValue]]:
-        batches = []
-        start_time = datetime(2020, 1, 1)
-        cur_end_time = start_time
-        for i in range(0, len(opt_data.jobs), 5):
-            batch = Batch(opt_data.jobs[i:i + 5])
-
-            for j in batch.jobs:
-                j.start = cur_end_time
-                j.end = cur_end_time + timedelta(minutes=20)
-
-            cur_end_time = batch.jobs[0].end
-
-            batches.append((batch, FrobnicationValue(random.random())))
-
-        return batches
-
-
-class ScheduleBuilder:
-    def build_schedule(self, opt_data: OptimisationData, batch_frobnication: List[Tuple[Batch, FrobnicationValue]]):
-        # Frobnication value decides the machine
-        machines = opt_data.machines
-        num_machines = len(machines)
-        for batch, frobnication_value in batch_frobnication:
-            machine_idx = int(frobnication_value * num_machines)
-            batch.machine = machines[machine_idx]
-
-        return Schedule([b for b, _ in batch_frobnication])
 
 
 class ScheduleAnalyser:
@@ -66,7 +36,7 @@ class E2EScheduler:
 
         # Optimisation run
         optimisation_runner = OptimisationRunner()
-        batches = optimisation_runner.run_optimisation(opt_data)
+        schedule = optimisation_runner.run_optimisation(opt_data)
 
         # Schedule creator
         schedule_builder = ScheduleBuilder()

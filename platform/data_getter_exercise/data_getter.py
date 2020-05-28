@@ -16,7 +16,7 @@ class OptimisationDataGetter:
         jobs = [Job(wafer_id='blah', metadata={}) for _ in jobs_data]
 
         machines_data = file_client.get_file_data('machines.csv')
-        machines = [Machine() for _ in machines_data]
+        machines = [Machine(id_=row['id']) for row in machines_data]
 
         return OptimisationData(jobs=jobs, machines=machines)
 
