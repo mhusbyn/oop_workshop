@@ -9,9 +9,6 @@ class Job:
     metadata: Dict
     wafer_id: str
 
-    # start: Optional[datetime] = None
-    # end: Optional[datetime] = None
-
 
 class Machine:
     def __init__(self, id_: str):
@@ -30,10 +27,6 @@ class Machine:
     @property
     def id(self):
         return self._id
-
-
-class File:
-    pass
 
 
 FIXED_BATCH_TIME = timedelta(minutes=10)

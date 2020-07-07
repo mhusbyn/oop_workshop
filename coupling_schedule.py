@@ -54,4 +54,3 @@ def get_total_process_time(schedule: Schedule):
 # 3. What about monitor wafers?
 
 
-# Some metric calculation and the use of dicts?
