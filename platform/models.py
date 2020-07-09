@@ -38,9 +38,6 @@ class Batch:
     jobs: List[Job]
     machine: Machine
 
-    start: datetime
-    end: datetime
-
 
 @dataclass
 class Schedule:
